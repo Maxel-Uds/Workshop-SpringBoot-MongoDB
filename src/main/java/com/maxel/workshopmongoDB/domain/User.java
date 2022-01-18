@@ -1,9 +1,12 @@
 package com.maxel.workshopmongoDB.domain;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Document(collection = "users")
@@ -13,6 +16,10 @@ public class User implements Serializable {
     private String id;
     private String name;
     private String email;
+    //A anotação indica que está referenciando outra coleção do DB
+    //O parâmetro lazy indica que os posts não serão carregados automaticamente quando os usuários forem buscados
+    @DBRef(lazy = true)
+    private List<Post> posts = new ArrayList<Post>();
 
     public User() {}
 
@@ -44,6 +51,14 @@ public class User implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 
     @Override
