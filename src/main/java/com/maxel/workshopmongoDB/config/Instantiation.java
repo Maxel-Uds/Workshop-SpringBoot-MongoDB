@@ -2,6 +2,7 @@ package com.maxel.workshopmongoDB.config;
 
 import com.maxel.workshopmongoDB.domain.Post;
 import com.maxel.workshopmongoDB.domain.User;
+import com.maxel.workshopmongoDB.dto.AuthorDTO;
 import com.maxel.workshopmongoDB.repositories.PostRepository;
 import com.maxel.workshopmongoDB.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ public class Instantiation implements CommandLineRunner {
         sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
 
         userRepository.deleteAll();
+        postRepository.deleteAll();
 
         User maria = new User(null, "Maria Brown", "maria@gmail.com");
         User alex = new User(null, "Alex Green", "alex@gmail.com");
@@ -34,10 +36,11 @@ public class Instantiation implements CommandLineRunner {
         User max = new User(null, "Maxel Udson", "maxel@gmail.com");
         User ademar = new User(null, "Ademar Silva", "ademar@gmail.com");
 
-        Post post1 = new Post(null, sdf.parse("21/03/2022"), "Partiu viagem!", "Vou viajar para SP abraços!", maria);
-        Post post2 = new Post(null, sdf.parse("27/03/2022"), "Bom dia!", "Acordei feliz hoje!", maria);
-
         userRepository.saveAll(Arrays.asList(maria, alex, bob, max, ademar));
+
+        Post post1 = new Post(null, sdf.parse("21/03/2022"), "Partiu viagem!", "Vou viajar para SP abraços!", new AuthorDTO(maria));
+        Post post2 = new Post(null, sdf.parse("27/03/2022"), "Bom dia!", "Acordei feliz hoje!", new AuthorDTO(maria));
+
         postRepository.saveAll(Arrays.asList(post1, post2));
     }
 }
