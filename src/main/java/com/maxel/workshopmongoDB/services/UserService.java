@@ -29,6 +29,11 @@ public class UserService {
        return userRepository.save(fromDTO(user));
     }
 
+    public void delete(String id) {
+        findById(id);
+        userRepository.deleteById(id);
+    }
+
     private User fromDTO(UserDTO userDTO) {
         return new User(null, userDTO.getName(), userDTO.getEmail());
     }
