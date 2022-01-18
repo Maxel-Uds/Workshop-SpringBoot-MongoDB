@@ -1,5 +1,6 @@
 package com.maxel.workshopmongoDB.resources;
 
+import com.maxel.workshopmongoDB.domain.Post;
 import com.maxel.workshopmongoDB.dto.UserDTO;
 import com.maxel.workshopmongoDB.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,5 +49,11 @@ public class UserResource {
     public ResponseEntity<Void> update(@PathVariable String id, @RequestBody UserDTO userDTO) {
         userService.update(userDTO, id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value = "/{id}/posts")
+    public ResponseEntity<List<Post>> findAllposts(@PathVariable String id) {
+        var user = userService.findById(id);
+        return ResponseEntity.ok().body(user.getPosts());
     }
 }
