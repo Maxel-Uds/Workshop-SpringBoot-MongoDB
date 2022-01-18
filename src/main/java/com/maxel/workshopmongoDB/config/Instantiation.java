@@ -3,6 +3,7 @@ package com.maxel.workshopmongoDB.config;
 import com.maxel.workshopmongoDB.domain.Post;
 import com.maxel.workshopmongoDB.domain.User;
 import com.maxel.workshopmongoDB.dto.AuthorDTO;
+import com.maxel.workshopmongoDB.dto.CommentDTO;
 import com.maxel.workshopmongoDB.repositories.PostRepository;
 import com.maxel.workshopmongoDB.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,13 @@ public class Instantiation implements CommandLineRunner {
 
         Post post1 = new Post(null, sdf.parse("21/03/2022"), "Partiu viagem!", "Vou viajar para SP abraços!", new AuthorDTO(maria));
         Post post2 = new Post(null, sdf.parse("27/03/2022"), "Bom dia!", "Acordei feliz hoje!", new AuthorDTO(maria));
+
+        CommentDTO comment1 = new CommentDTO("Boa viagem!", sdf.parse("21/03/2022"), new AuthorDTO(alex));
+        CommentDTO comment2 = new CommentDTO("Aproveite!", sdf.parse("22/03/2022"), new AuthorDTO(bob));
+        CommentDTO comment3 = new CommentDTO("Tenha um ótimo dia!", sdf.parse("27/03/2022"), new AuthorDTO(alex));
+
+        post1.getComments().addAll(Arrays.asList(comment1, comment2));
+        post2.getComments().add(comment3);
 
         postRepository.saveAll(Arrays.asList(post1, post2));
 
